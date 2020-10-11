@@ -1,4 +1,5 @@
 const musicContainer = document.getElementById('music-container');
+const infoContainer = document.getElementById('info-container');
 
 const playBtn = document.getElementById('play');
 const prevBtn = document.getElementById('prev');
@@ -12,21 +13,35 @@ const title = document.getElementById('title');
 const cover = document.getElementById('cover');
 
 // Song titles
-const songs = ['Another Smash of the Stack', 'Winter of 95', 'A 3 line diff']
+// const songs = ['Another Smash of the Stack', 'Winter of 95', 'A 3 line diff']
+
+let songIndex = 0;
+traer();
+function traer(){
+  fetch('./openBsdSongs.json')
+  .then( req => req.json())
+  .then( data => {
+    songs = data;
+    loadSong(data[songIndex]);
+  })
+}
+              
 
 // keep track of song
-let songIndex = 0;
+// console.log(songs[songIndex]);
 
 // Initially load song details into DOM
-loadSong(songs[songIndex]);
+//loadSong(songs[songIndex]);
 
 
 // Update song details
 function loadSong(song) {
-  title.innerText = song;
-  audio.src = `media/${song}.mp3`;
-
-  cover.src = `images/${song}.jpg`;
+  console.log(song);
+   title.innerText = `${song.title}`;
+   audio.src = `${song.mp3}`;
+   cover.src = `${song.image}`;
+   console.log(song.lyrics);
+   infoContainer.innerText = song.lyrics;
 }
 
 // Plays the song
